@@ -163,7 +163,7 @@ namespace Level
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.LoadLevel(nextWorld, nextStage);
+                GameManager.Instance.LoadNextLevel();
             }
             else
             {

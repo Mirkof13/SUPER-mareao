@@ -147,6 +147,16 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Advances to the next level following the fixed progression: 1-1 → 1-2 → 1-4 → Title.
+    /// </summary>
+    public void LoadNextLevel()
+    {
+        if (World == 1 && Stage == 1)      LoadLevel(1, 2);
+        else if (World == 1 && Stage == 2) LoadLevel(1, 4);
+        else                               SceneManager.LoadScene("Title");
+    }
+
+    /// <summary>
     /// Schedules a level reset after a delay (usually when the player dies).
     /// </summary>
     public void ResetLevel(float delay)
