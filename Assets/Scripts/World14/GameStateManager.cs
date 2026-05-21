@@ -27,14 +27,16 @@ public class GameStateManager : MonoBehaviour {
 				coins = GameManager.Instance.Coins;
 			}
 		} else {
-			// Reset the existing persistent instance for the new level
-			GameStateManager existing = FindObjectsOfType<GameStateManager>()[0] == this
-				? FindObjectsOfType<GameStateManager>()[1]
-				: FindObjectsOfType<GameStateManager>()[0];
-			existing.ConfigNewLevel();
-			if (GameManager.Instance != null) {
-				existing.lives = GameManager.Instance.Lives;
-				existing.coins = GameManager.Instance.Coins;
+			// Find the persistent instance (not this one) and reset it for the new level
+			foreach (var gsm in FindObjectsOfType<GameStateManager>()) {
+				if (gsm != this) {
+					gsm.ConfigNewLevel();
+					if (GameManager.Instance != null) {
+						gsm.lives = GameManager.Instance.Lives;
+						gsm.coins = GameManager.Instance.Coins;
+					}
+					break;
+				}
 			}
 			Destroy (gameObject);
 		}

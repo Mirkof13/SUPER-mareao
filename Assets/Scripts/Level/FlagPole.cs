@@ -1,5 +1,3 @@
-using UnityEditor;
-
 namespace Level
 {
     using System;
