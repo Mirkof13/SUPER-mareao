@@ -141,10 +141,12 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene($"{toWorld}-{toStage}");
 
-        if (SoundManager.Instance != null)
-        {
+        if (SoundManager.Instance == null) return;
+        // 1-1 uses main system audio; World14 levels manage their own music
+        if (toWorld == 1 && toStage == 1)
             SoundManager.Instance.PlayMusic(SoundManager.Instance.backgroundMusic);
-        }
+        else
+            SoundManager.Instance.StopMusic();
     }
 
     /// <summary>

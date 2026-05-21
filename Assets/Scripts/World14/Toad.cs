@@ -31,6 +31,6 @@ public class Toad : MonoBehaviour {
 		yield return new WaitForSecondsRealtime (.75f);
 		ButOurPrincess.SetActive (true);
 		yield return new WaitForSecondsRealtime (t_LevelManager.castleCompleteMusic.length);
-		SceneManager.LoadScene ("Main Menu");
+		SceneManager.LoadScene ("Title");
 	}
 }

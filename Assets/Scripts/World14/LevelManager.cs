@@ -86,17 +86,26 @@ public class LevelManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		t_GameStateManager = FindObjectOfType<GameStateManager>();
+		if (t_GameStateManager == null) {
+			Debug.LogError("[LevelManager] GameStateManager not found — creating default.");
+			t_GameStateManager = new GameObject("GameStateManager").AddComponent<GameStateManager>();
+			t_GameStateManager.ConfigNewGame();
+		}
 		RetrieveGameState ();
 
 		mario = FindObjectOfType<Mario> ();
+		if (mario == null) {
+			Debug.LogError("[LevelManager] Mario not found in scene!");
+			return;
+		}
 		mario_Animator = mario.gameObject.GetComponent<Animator> ();
 		mario_Rigidbody2D = mario.gameObject.GetComponent<Rigidbody2D> ();
 		mario.UpdateSize ();
 
-		// Sound volume
-		musicSource.volume = PlayerPrefs.GetFloat("musicVolume");
-		soundSource.volume = PlayerPrefs.GetFloat("soundVolume");
-		pauseSoundSource.volume = PlayerPrefs.GetFloat("soundVolume");
+		// Sound volume (default 1.0 if never set)
+		musicSource.volume = PlayerPrefs.GetFloat("musicVolume", 1f);
+		soundSource.volume = PlayerPrefs.GetFloat("soundVolume", 1f);
+		pauseSoundSource.volume = PlayerPrefs.GetFloat("soundVolume", 1f);
 
 		// HUD
 		SetHudCoin ();

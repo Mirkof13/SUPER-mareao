@@ -43,9 +43,13 @@ public class GameOverScreen : MonoBehaviour {
 			StartCoroutine (ChangeMessageCo ());
 		}
 
-		gameOverMusicSource.volume = PlayerPrefs.GetFloat ("musicVolume");
-		gameOverMusicSource.Play ();
-		LoadMainMenu (gameOverMusicSource.clip.length);
+		gameOverMusicSource.volume = PlayerPrefs.GetFloat("musicVolume", 1f);
+		if (gameOverMusicSource.clip != null) {
+			gameOverMusicSource.Play ();
+			LoadMainMenu (gameOverMusicSource.clip.length);
+		} else {
+			LoadMainMenu (3f);
+		}
 
 		Debug.Log (this.name + " Start: current scene is " + SceneManager.GetActiveScene ().name);
 	}
