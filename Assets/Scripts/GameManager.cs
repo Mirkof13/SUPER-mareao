@@ -139,14 +139,28 @@ public class GameManager : MonoBehaviour
         World = toWorld;
         Stage = toStage;
 
-        SceneManager.LoadScene($"{toWorld}-{toStage}");
-
-        if (SoundManager.Instance == null) return;
-        // 1-1 uses main system audio; World14 levels manage their own music
         if (toWorld == 1 && toStage == 1)
-            SoundManager.Instance.PlayMusic(SoundManager.Instance.backgroundMusic);
+        {
+            SceneManager.LoadScene("1-1");
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlayMusic(SoundManager.Instance.backgroundMusic);
+        }
         else
-            SoundManager.Instance.StopMusic();
+        {
+            // World14 level: set up GameStateManager and show LevelStart screen first
+            var gsm = FindObjectOfType<GameStateManager>();
+            if (gsm == null)
+                gsm = new GameObject("GameStateManager").AddComponent<GameStateManager>();
+            gsm.lives      = Lives;
+            gsm.coins      = Coins;
+            gsm.sceneToLoad = $"{toWorld}-{toStage}";
+            gsm.timeup      = false;
+
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.StopMusic();
+
+            SceneManager.LoadScene("LevelStart");
+        }
     }
 
     /// <summary>

@@ -21,13 +21,18 @@ public class TimeUpScreen : MonoBehaviour {
 		Time.timeScale = 1;
 
 		t_GameStateManager = FindObjectOfType<GameStateManager> ();
-		string worldName = t_GameStateManager.sceneToLoad;
 
-		WorldTextHUD.text = Regex.Split (worldName, "World ")[1];
-		ScoreTextHUD.text = t_GameStateManager.scores.ToString ("D6");
-		CoinTextHUD.text = "x" + t_GameStateManager.coins.ToString ("D2");
+		string worldName = t_GameStateManager != null ? t_GameStateManager.sceneToLoad : null;
+		if (worldName == null && GameManager.Instance != null)
+			worldName = GameManager.Instance.World + "-" + GameManager.Instance.Stage;
+		if (worldName == null) worldName = "1-1";
 
-		StartCoroutine (LoadSceneDelayCo ("Level Start Screen", loadScreenDelay));
+		string displayName = worldName.Contains("World ") ? Regex.Split(worldName, "World ")[1] : worldName;
+		WorldTextHUD.text = displayName;
+		ScoreTextHUD.text = (t_GameStateManager != null ? t_GameStateManager.scores : 0).ToString("D6");
+		CoinTextHUD.text = "x" + (t_GameStateManager != null ? t_GameStateManager.coins : 0).ToString("D2");
+
+		StartCoroutine (LoadSceneDelayCo ("LevelStart", loadScreenDelay));
 		Debug.Log (this.name + " Start: current scene is " + SceneManager.GetActiveScene ().name);
 	}
 

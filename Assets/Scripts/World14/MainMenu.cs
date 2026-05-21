@@ -54,30 +54,30 @@ public class MainMenu : MonoBehaviour {
 
 	public void StartNewGame() {
 		if (!volumePanelActive) {
-			t_GameStateManager.sceneToLoad = "World 1-1";
-			SceneManager.LoadScene ("Level Start Screen");
+			t_GameStateManager.sceneToLoad = "1-1";
+			SceneManager.LoadScene ("LevelStart");
 		}
 	}
 
 	public void StartWorld1_2() {
 		if (!volumePanelActive) {
-			t_GameStateManager.sceneToLoad = "World 1-2";
-			SceneManager.LoadScene ("Level Start Screen");
+			t_GameStateManager.sceneToLoad = "1-2";
+			SceneManager.LoadScene ("LevelStart");
 		}
 	}
-		
+
 	public void StartWorld1_3() {
 		if (!volumePanelActive) {
-			t_GameStateManager.sceneToLoad = "World 1-3";
-			SceneManager.LoadScene ("Level Start Screen");
+			t_GameStateManager.sceneToLoad = "1-1";
+			SceneManager.LoadScene ("LevelStart");
 		}
 	}
 
 
 	public void StartWorld1_4() {
 		if (!volumePanelActive) {
-			t_GameStateManager.sceneToLoad = "World 1-4";
-			SceneManager.LoadScene ("Level Start Screen");
+			t_GameStateManager.sceneToLoad = "1-4";
+			SceneManager.LoadScene ("LevelStart");
 		}
 	}
 
