@@ -472,14 +472,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Controls:
+  m_text: 'Evaluacion Continua:
 
+    PROGRAMACION GRAFICA Y MULTIMEDIA I
 
-    W,A,S,D - Move
-
-    LEFT SHIfT - RUN
-
-    SPACE - JUMP'
+    Mirkof Guzman'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4bab44a69d488ef43a20b5767e615bfb, type: 2}
   m_sharedMaterial: {fileID: 3976844349471660517, guid: 4bab44a69d488ef43a20b5767e615bfb, type: 2}
