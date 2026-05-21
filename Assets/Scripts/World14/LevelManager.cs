@@ -118,6 +118,7 @@ public class LevelManager : MonoBehaviour {
 		scores = t_GameStateManager.scores;
 		timeLeft = t_GameStateManager.timeLeft;
 		hurryUp = t_GameStateManager.hurryUp;
+		if (timeLeft <= 0) timeLeft = 400.5f;
 	}
 
 

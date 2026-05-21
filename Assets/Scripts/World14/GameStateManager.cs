@@ -22,12 +22,20 @@ public class GameStateManager : MonoBehaviour {
 		if (FindObjectsOfType (GetType ()).Length == 1) {
 			DontDestroyOnLoad (gameObject);
 			ConfigNewGame ();
-			// Sync lives/coins from GameManager (1-1 project) when transitioning from world 1-1
 			if (GameManager.Instance != null) {
 				lives = GameManager.Instance.Lives;
 				coins = GameManager.Instance.Coins;
 			}
 		} else {
+			// Reset the existing persistent instance for the new level
+			GameStateManager existing = FindObjectsOfType<GameStateManager>()[0] == this
+				? FindObjectsOfType<GameStateManager>()[1]
+				: FindObjectsOfType<GameStateManager>()[0];
+			existing.ConfigNewLevel();
+			if (GameManager.Instance != null) {
+				existing.lives = GameManager.Instance.Lives;
+				existing.coins = GameManager.Instance.Coins;
+			}
 			Destroy (gameObject);
 		}
 	}
