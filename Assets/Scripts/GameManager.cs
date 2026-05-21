@@ -173,7 +173,8 @@ public class GameManager : MonoBehaviour
     {
         if (Lives > 0)
         {
-            LoadLevel(World, Stage);
+            SyncToGameStateManager($"{World}-{Stage}");
+            SceneManager.LoadScene("LevelStart");
         }
         else
         {
@@ -187,7 +188,21 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         _onLevel = false;
+        SyncToGameStateManager($"{World}-{Stage}");
         SceneManager.LoadScene("GameOver");
+    }
+
+    /// <summary>
+    /// Syncs lives, coins and next scene into GameStateManager so World14 screens show correct data.
+    /// </summary>
+    private void SyncToGameStateManager(string sceneToLoad)
+    {
+        var gsm = FindObjectOfType<GameStateManager>();
+        if (gsm == null) return;
+        gsm.lives = Lives;
+        gsm.coins = Coins;
+        gsm.sceneToLoad = sceneToLoad;
+        gsm.timeup = false;
     }
 
     #endregion

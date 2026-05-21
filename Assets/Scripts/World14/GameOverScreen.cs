@@ -22,14 +22,19 @@ public class GameOverScreen : MonoBehaviour {
 		Time.timeScale = 1;
 
 		t_GameStateManager = FindObjectOfType<GameStateManager> ();
-		string worldName = t_GameStateManager != null ? t_GameStateManager.sceneToLoad : SceneManager.GetActiveScene().name;
+
+		string worldName = t_GameStateManager != null ? t_GameStateManager.sceneToLoad : null;
+		if (worldName == null && GameManager.Instance != null)
+			worldName = GameManager.Instance.World + "-" + GameManager.Instance.Stage;
 		if (worldName == null) worldName = "1-1";
 
-		// Handle both "World 1-4" (1-4 project) and "1-4" (1-1 project) naming
 		string displayName = worldName.Contains("World ") ? Regex.Split (worldName, "World ")[1] : worldName;
 		WorldTextHUD.text = displayName;
-		ScoreTextHUD.text = t_GameStateManager != null ? t_GameStateManager.scores.ToString ("D6") : "000000";
-		CoinTextHUD.text = "x" + (t_GameStateManager != null ? t_GameStateManager.coins.ToString ("D2") : "00");
+
+		int coins  = t_GameStateManager != null ? t_GameStateManager.coins  : (GameManager.Instance != null ? GameManager.Instance.Coins  : 0);
+		int scores = t_GameStateManager != null ? t_GameStateManager.scores : 0;
+		ScoreTextHUD.text = scores.ToString ("D6");
+		CoinTextHUD.text  = "x" + coins.ToString ("D2");
 
 		bool timeup = t_GameStateManager != null && t_GameStateManager.timeup;
 		if (!timeup) {
