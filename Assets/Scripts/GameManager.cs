@@ -94,7 +94,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void HandlePauseInput()
     {
-        if (_onLevel)
+        // Do not handle pause in World14 levels — LevelManager handles it there
+        if (_onLevel && FindObjectOfType<LevelManager>() == null)
         {
             if (Input.GetKeyDown(KeyCode.Pause) || Input.GetKeyDown(KeyCode.Escape))
             {
@@ -102,7 +103,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = IsPaused ? 0f : 1f;
                 OnPause?.Invoke();
             }
-        } 
+        }
     }
 
     #endregion
@@ -173,8 +174,7 @@ public class GameManager : MonoBehaviour
     {
         if (Lives > 0)
         {
-            SyncToGameStateManager($"{World}-{Stage}");
-            SceneManager.LoadScene("LevelStart");
+            LoadLevel(World, Stage);
         }
         else
         {

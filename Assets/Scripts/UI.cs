@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Global UI manager singleton.
@@ -24,6 +25,10 @@ public class UI : MonoBehaviour
 
     #region Unity Lifecycle
 
+    private static readonly System.Collections.Generic.HashSet<string> _world14Scenes
+        = new System.Collections.Generic.HashSet<string>
+        { "1-2", "1-4", "1-2-Underground", "1-2-Castle", "LevelStart", "GameOver" };
+
     private void Awake()
     {
         if (Instance != null)
@@ -33,11 +38,24 @@ public class UI : MonoBehaviour
         }
 
         Instance = this;
-        
+
         if (transform.parent != null)
             transform.SetParent(null);
 
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        var canvas = GetComponent<Canvas>();
+        if (canvas != null)
+            canvas.enabled = !_world14Scenes.Contains(scene.name);
     }
 
     private void OnEnable()
